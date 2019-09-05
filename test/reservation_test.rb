@@ -1,4 +1,4 @@
-# test/test_reservation.rb
+# test/reservation_test.rb
 
 require_relative 'test_helper'
 
