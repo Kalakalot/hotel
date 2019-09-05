@@ -46,16 +46,21 @@ describe Hotel::ReservationManager do
         expect(new_reservation.end_date).must_be_kind_of Date
       end
       
-      # it "adds the new reservation to the master list of reservations" do
-      #   start_date = Date.parse("2019-12-20")
-      #   end_date = Date.parse("2019-12-24")
-      #   room_number = rand(1..20)
-      #   # act
-      #   new_reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
-      #   # assert
-      #   expect(@reservation_manager.all_reservations.length).must_equal 1
+      it "adds the new reservation to the collection of all reservations" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        room_number = rand(1..20)
+        # act
+        reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
+        # assert
+        expect @reservation_manager.all_reservations.include?(reservation)
 
-      # end
+
+        # it "adds the new trip to a the collection of all trips" do
+        #   expect @dispatcher.trips.include?(@trip)
+        # end
+
+      end
       
     end
     

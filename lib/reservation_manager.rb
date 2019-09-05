@@ -2,7 +2,11 @@
 module Hotel
   
   class ReservationManager
-    def Initialize
+    
+    attr_reader :all_reservations
+    
+    def initialize
+      # create an empty array to hold reservations
       @all_reservations = []
     end
     
@@ -28,29 +32,29 @@ module Hotel
         end_date,
         room_number
       )
-
+      
       # add new reservation to list of all reservations
-      # @all_reservations << reservation
+      @all_reservations << reservation
       
       return reservation
     end
     
-        
-    def reservations(date)
-      # reservations_array = []
-      # # reservations.each do
-      # #   if date >= 
-      # #   end
-      
-      
-      #   # start_date = Date.parse("2020-01-20")
-      #   #     end_date = Date.parse("2020-01-23")
-      #   #     room_number = rand(1..20)
-      #   #     reservation_3 = Hotel::Reservation.new(start_date, end_date, room_number)
-      
-      
-      #   return reservations_array
-    end
+    
+    # def reservations(date)
+    #   # reservations_array = []
+    #   # # reservations.each do
+    #   # #   if date >= 
+    #   # #   end
+    
+    
+    #   #   # start_date = Date.parse("2020-01-20")
+    #   #   #     end_date = Date.parse("2020-01-23")
+    #   #   #     room_number = rand(1..20)
+    #   #   #     reservation_3 = Hotel::Reservation.new(start_date, end_date, room_number)
+    
+    
+    #   #   return reservations_array
+    # end
     
   end
 end
