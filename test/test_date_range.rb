@@ -3,7 +3,7 @@ require_relative "test_helper"
 
 describe Hotel::DateRange do
   describe "Constructor" do
-    it "Can be initialized with two dates" do
+    it "can be initialized with two dates" do
       start_date = Date.new(2017, 01, 01)
       end_date = start_date + 3
 
@@ -12,6 +12,16 @@ describe Hotel::DateRange do
       expect(range.start_date).must_equal start_date
       expect(range.end_date).must_equal end_date
     end
+
+it "dates are instances of Date class" do
+  start_date = Date.new(2017, 01, 01)
+  end_date = start_date + 3
+
+  range = Hotel::DateRange.new(start_date, end_date)
+
+  expect(range.start_date).must_be_kind_of Date
+  expect(range.end_date).must_be_kind_of Date
+end
 
     # xit "is an an error for negative-lenght ranges" do
     # end

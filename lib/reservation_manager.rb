@@ -2,6 +2,9 @@
 module Hotel
   
   class ReservationManager
+    def Initialize
+      @all_reservations = []
+    end
     
     def rooms
       valid_rooms = (1..20)
@@ -12,29 +15,42 @@ module Hotel
       return room_list
     end
     
-    def reserve_room(start_date, end_date)
+    def reserve_room(start_date, end_date, room_number)
       
       # define the variables needed for a new reservation
-      provided_start = "2020-02-03"
-      provided_end = "2020-02-05"
-      start_date = Date.parse(provided_start)
-      end_date = Date.parse(provided_end)
+      start_date = Date.parse("2020-02-03")
+      end_date = Date.parse("2020-02-05")
       room_number = rand(1..20)
-
+      
       # instantitate the new reservation
-      new_reservation = Reservation.new(
-        start_date: start_date,
-        end_date: end_date, 
-        room_number: room_number
+      reservation = Hotel::Reservation.new(
+        start_date,
+        end_date,
+        room_number
       )
-      # take in start_date and end_date and return a new instance of class Reservation
-      # start_date and end_date should be instances of class Date
-      return new_reservation
+
+      # add new reservation to list of all reservations
+      # @all_reservations << reservation
+      
+      return reservation
     end
     
+        
     def reservations(date)
-      return []
+      # reservations_array = []
+      # # reservations.each do
+      # #   if date >= 
+      # #   end
+      
+      
+      #   # start_date = Date.parse("2020-01-20")
+      #   #     end_date = Date.parse("2020-01-23")
+      #   #     room_number = rand(1..20)
+      #   #     reservation_3 = Hotel::Reservation.new(start_date, end_date, room_number)
+      
+      
+      #   return reservations_array
     end
+    
   end
-  
 end
