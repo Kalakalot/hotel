@@ -24,6 +24,15 @@ describe Hotel::Reservation do
       expect(reservation.date_range.start_date).must_equal date_range.start_date
       expect(reservation.date_range.end_date).must_equal date_range.end_date
     end
+
+    it "keeps track of the date range" do
+      start_date = Date.parse("2020-03-12")
+      end_date = Date.parse("2020-03-15")
+      range = Hotel::DateRange.new(start_date, end_date)
+      room_number = rand(1..20)
+      reservation = Hotel::Reservation.new(range, room_number)
+      expect(reservation.date_range).must_equal range
+    end
     
     it "keeps track of room_number" do
       start_date = Date.parse("2020-03-12")

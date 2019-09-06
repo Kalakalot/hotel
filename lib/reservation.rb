@@ -21,5 +21,3 @@ module Hotel
 
 end
   
-  
-  
