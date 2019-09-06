@@ -10,17 +10,17 @@ module Hotel
       @end_date = end_date
     end
     
-    def overlap?(other)
-      return false
-    end
+    # def overlap?(other)
+    #   return false
+    # end
     
-    def include?(date)
-      return false
-    end
+    # def include?(date)
+    #   return false
+    # end
     
-    def nights 
-      return 3
-    end
+    # def nights 
+    #   return 3
+    # end
     
   end
   
