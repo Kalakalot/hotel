@@ -28,32 +28,35 @@ describe Hotel::ReservationManager do
         # arrange
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
+        range = Hotel::DateRange.new(start_date, end_date)
         room_number = rand(1..20)
         # act -- call reserve_room on reservation_manager
         # new_reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
-        new_reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
+        new_reservation = @reservation_manager.reserve_room(range, room_number)
         # assert
         expect(new_reservation).must_be_kind_of Hotel::Reservation
       end
       
-      it "returns instances of date for start and end date" do
+      it "can look inside date_range and return instances of date for start and end date" do
         # arrange
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = rand(1..20)
         # act
-        new_reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
+        new_reservation = @reservation_manager.reserve_room(date_range, room_number)
         # assert
-        expect(new_reservation.start_date).must_be_kind_of Date
-        expect(new_reservation.end_date).must_be_kind_of Date
+        expect(new_reservation.date_range.start_date).must_be_kind_of Date
+        expect(new_reservation.date_range.end_date).must_be_kind_of Date
       end
       
       it "adds the new reservation to the collection of all reservations" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = rand(1..20)
         # act
-        reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
+        reservation = @reservation_manager.reserve_room(date_range, room_number)
         # assert
         expect @reservation_manager.all_reservations.include?(reservation)
       end 
@@ -61,97 +64,77 @@ describe Hotel::ReservationManager do
       it "the elements in the collection of all reservations are an instance of Reservation" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = rand(1..20)
         # act
-        reservation = @reservation_manager.reserve_room(start_date, end_date, room_number)
+        reservation = @reservation_manager.reserve_room(date_range, room_number)
         # assert
         expect(@reservation_manager.all_reservations[0]).must_be_kind_of Hotel::Reservation
       end
       
     end
     
+      
+    describe "reservations(date)" do
+      it "returns an empty array if there are no reservations for the date provided" do
+        # arrange
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        # act
+        reservations_for_date = @reservation_manager.reservations(Date.parse("2021-01-01"))   
+        
+        # assert
+        expect(reservations_for_date.length).must_equal 0
+        
+      end
+      
+      it "returns an array with the expected number of matching reservations" do
+        # arrange
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-26")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2020-01-20")
+        end_date = Date.parse("2020-01-23")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_3 = @reservation_manager.reserve_room(date_range, room_number)
+        # act
+        reservations_for_date = @reservation_manager.reservations(Date.parse("2019-12-22"))   
+        # assert
+        expect(reservations_for_date.length).must_equal 2
+        
+      end
+      
+      it "returns an array of reservation objects for reservations matching date" do
+        # arrange
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        # act
+        reservations_for_date = @reservation_manager.reservations(Date.parse("2019-12-22"))   
+        
+        # assert
+        expect(reservations_for_date[0]).must_be_kind_of Hotel::Reservation
+      end
+      
+    end
+    
+    
   end
-  
-  # I can access the list of reservations for a specific date, so that I can 
-  # track reservations by date
-  
-  describe "reservations(date)" do
-    it "returns an empty array if there are no reservations for the date provided" do
-      # arrange
-      start_date = Date.parse("2019-12-20")
-      end_date = Date.parse("2019-12-24")
-      room_number = rand(1..20)
-      reservation_1 = @reservation_manager.reserve_room(start_date, end_date, room_number)
-      
-      # act
-      reservations_for_date = @reservation_manager.reservations(Date.parse("2021-01-01"))   
-      
-      # assert
-      expect(reservations_for_date.length).must_equal 0
-      
-    end
-    
-    it "returns an array with the expected number of matching reservations" do
-      # arrange
-      start_date = Date.parse("2019-12-20")
-      end_date = Date.parse("2019-12-24")
-      room_number = rand(1..20)
-      reservation_1 = @reservation_manager.reserve_room(start_date, end_date, room_number)
-    
-      start_date = Date.parse("2019-12-20")
-      end_date = Date.parse("2019-12-26")
-      room_number = rand(1..20)
-      reservation_2 = @reservation_manager.reserve_room(start_date, end_date, room_number)
-    
-      start_date = Date.parse("2020-01-20")
-      end_date = Date.parse("2020-01-23")
-      room_number = rand(1..20)
-      reservation_3 = @reservation_manager.reserve_room(start_date, end_date, room_number)
-      # act
-      reservations_for_date = @reservation_manager.reservations(Date.parse("2019-12-22"))   
-      # assert
-      expect(reservations_for_date.length).must_equal 2
-    
-    end
-    
-    it "returns an array of reservation objects for reservations matching date" do
-      # arrange
-      start_date = Date.parse("2019-12-20")
-      end_date = Date.parse("2019-12-24")
-      room_number = rand(1..20)
-      reservation_1 = @reservation_manager.reserve_room(start_date, end_date, room_number)
-      
-      # act
-      reservations_for_date = @reservation_manager.reservations(Date.parse("2019-12-22"))   
-      
-      # assert
-      expect(reservations_for_date[0]).must_be_kind_of Hotel::Reservation
-    end
-    
-  end
-  
-  # it "returns a list of reservations for a provided date" do
-  #   start_date = Date.parse("2019-12-20")
-  #   end_date = Date.parse("2019-12-24")
-  #   room_number = rand(1..20)
-  #   reservation_1 = Hotel::Reservation.new(start_date, end_date, room_number)
-  
-  #   start_date = Date.parse("2019-12-20")
-  #   end_date = Date.parse("2019-12-26")
-  #   room_number = rand(1..20)
-  #   reservation_2 = Hotel::Reservation.new(start_date, end_date, room_number)
-  
-  #   start_date = Date.parse("2020-01-20")
-  #   end_date = Date.parse("2020-01-23")
-  #   room_number = rand(1..20)
-  #   reservation_3 = Hotel::Reservation.new(start_date, end_date, room_number)
-  
-  #   reservations_array = []
-  #   reservations_array = Hotel::ReservationManager.reservations(Date.parse("2019-12-21"))
-  
-  #   expect reservations_array.must_be_kind_of Array
-  
-  
-  # end
-  
 end

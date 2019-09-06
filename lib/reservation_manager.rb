@@ -1,6 +1,4 @@
 # lib/reservation_manager.rb
-
-require "pry"
 module Hotel
   
   class ReservationManager
@@ -21,17 +19,15 @@ module Hotel
       return room_list
     end
     
-    def reserve_room(start_date, end_date, room_number)
+    def reserve_room(date_range, room_number)
       
       # define the variables needed for a new reservation
-      start_date = start_date 
-      end_date = end_date 
+      date_range = date_range
       room_number = rand(1..20)
       
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
-        start_date,
-        end_date,
+        date_range,
         room_number
       )
       
@@ -46,7 +42,7 @@ module Hotel
       reservations_for_date = []
       
       @all_reservations.each do |reservation|
-        if date >= reservation.start_date && date <= reservation.end_date
+        if date >= reservation.date_range.start_date && date <= reservation.date_range.end_date
           reservations_for_date << reservation
         end
       end
