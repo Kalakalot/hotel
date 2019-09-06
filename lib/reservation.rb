@@ -10,9 +10,12 @@ module Hotel
       @room_number = room_number
     end
 
-    # def cost   
-    #   return 3
-    # end
+    def cost
+      cost_per_night = 200
+      nights = date_range.end_date - date_range.start_date
+      total = cost_per_night * nights   
+      return total
+    end
     
   end
 

@@ -24,7 +24,7 @@ describe Hotel::Reservation do
       expect(reservation.date_range.start_date).must_equal date_range.start_date
       expect(reservation.date_range.end_date).must_equal date_range.end_date
     end
-
+    
     it "keeps track of room_number" do
       start_date = Date.parse("2020-03-12")
       end_date = Date.parse("2020-03-15")
@@ -35,14 +35,34 @@ describe Hotel::Reservation do
     end
   end
   
-  
-  
-  # describe "cost" do
-  #   it "returns a number" do
-  #     start_date = Date.new(2017, 01, 01)
-  #     end_date = start_date + 3
-  #     reservation = Hotel::Reservation.new(start_date, end_date, nil)
-  #     expect(reservation.cost).must_be_kind_of Numeric
-  #   end
-  # end
+  describe "cost" do
+    it "returns a number" do
+      start_date = Date.new(2017, 01, 01)
+      end_date = start_date + 3
+      room_number = rand(1..20)
+      range = Hotel::DateRange.new(start_date, end_date)
+      reservation = Hotel::Reservation.new(range, room_number)
+      expect(reservation.cost).must_be_kind_of Numeric
+    end
+    
+    it "calculates total nights correctly" do
+      start_date = Date.parse("2020-03-12")
+      end_date = Date.parse("2020-03-16")
+      range = Hotel::DateRange.new(start_date, end_date)
+      room_number = rand(1..20)
+      reservation = Hotel::Reservation.new(range, room_number)
+      expect(reservation.cost / 200).must_equal 4
+    end
+
+    it "returns the expected total cost for 3 nights" do
+      start_date = Date.new(2017, 01, 01)
+      end_date = start_date + 3
+      room_number = rand(1..20)
+      range = Hotel::DateRange.new(start_date, end_date)
+      reservation = Hotel::Reservation.new(range, room_number)
+      expect(reservation.cost).must_equal 600
+    end
+
+    
+  end
 end
