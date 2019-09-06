@@ -23,7 +23,7 @@ describe Hotel::DateRange do
       expect(range.start_date).must_be_kind_of Date
       expect(range.end_date).must_be_kind_of Date
     end
-
+    
     it "creates a new DateRange object" do
       start_date = Date.new(2017, 01, 01)
       end_date = start_date + 3
@@ -33,11 +33,20 @@ describe Hotel::DateRange do
       expect(range).must_be_kind_of Hotel::DateRange
     end
     
-    # xit "is an an error for negative-lenght ranges" do
-    # end
+    it "raises an error if the start date is after the end date" do
+      start_date = Date.new(2021, 01, 01)
+      end_date = start_date - 3
+            
+      expect{ Hotel::DateRange.new(start_date, end_date) }.must_raise ArgumentError
+    end
     
-    # xit "is an error to create a 0-length range" do
-    # end
+    it "raises an error if the start and end dates are the same" do
+      start_date = Date.new(2021, 01, 01)
+      end_date = Date.new(2021, 01, 01)
+            
+      expect{ Hotel::DateRange.new(start_date, end_date) }.must_raise ArgumentError
+    end
+        
   end
   
   # describe "Overlap?" do
