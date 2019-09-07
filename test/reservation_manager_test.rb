@@ -139,8 +139,8 @@ describe Hotel::ReservationManager do
   
   describe "Wave 2" do
     
-    
     describe "reservations_by_rooms" do
+      
       it "returns a hash" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
@@ -206,13 +206,40 @@ describe Hotel::ReservationManager do
         room_reservations = @reservation_manager.reservations_by_rooms
         
         expect(room_reservations.values).must_be_kind_of Array
-
+        
         expect(room_reservations[20]).must_equal [reservation_1, reservation_2]
         
       end
+    end
+    
+    describe "rooms_available" do
       
+      it "returns an array" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = 5
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2019-12-21")
+        end_date = Date.parse("2019-12-25")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = 6
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+
+        start_date = Date.parse("2019-12-22")
+        end_date = Date.parse("2019-12-24")
+        test_date_range = Hotel::DateRange.new(start_date, end_date)
+        
+        available_rooms = @reservation_manager.rooms_available(test_date_range)
+        
+        expect(available_rooms).must_be_kind_of Array
+
+      end
+   
     end
     
   end
-  
 end
+
+

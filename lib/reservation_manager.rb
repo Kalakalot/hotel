@@ -51,27 +51,22 @@ module Hotel
     end
     
     def rooms_available(date_range)
-      # UGH, LOOP WITHIN A LOOP ...
-      # create a new collection that sorts reservations by room number
-      # initialize an array to hold available rooms
-      # loop through the collection of reservations by room number
-      # for each room number, compare the existing reservations against the lookup date range
-      # for each existing reservation, check ...
-      #     if reservation.start_date is <something> than the lookup.start_date
-      #       &&
-      #     if reservation.end_date is <something> than the lookup.end_date
-      # if there are no overlapping dates, add the room number to the "available rooms" array
-      # return array of available rooms 
       
+      available_rooms = []
       
-      # 
       # create a data structure that lists reservations by room number
       
       
       # loop through each room number: 
+      # for each existing reservation, check ...
+      #     if reservation.start_date is <something> than the lookup.start_date
+      #       &&
+      #     if reservation.end_date is <something> than the lookup.end_date
       # false if one or more reservations conflict
       # true if no conflicts
       # return all room numbers that evaluate to true
+      return available_rooms
+      
     end
     
     def reservations_by_rooms
@@ -79,7 +74,6 @@ module Hotel
       # a hash with room numbers as keys and reservations associated 
       # with those rooms as values (in an array).
       
-
       room_reservations = Hash.new { |hash,key| hash[key] = [] }
       
       @all_reservations.each do |reservation|
