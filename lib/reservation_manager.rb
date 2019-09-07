@@ -74,17 +74,19 @@ module Hotel
       # return all room numbers that evaluate to true
     end
     
-    def reservations_by_room
+    def reservations_by_rooms
       # helper method to transform @all_reservations into 
-      # an array of hashes, one hash per room number. Each hash
-      # includes room number and reservations as an array of values.
+      # a hash with room numbers as keys and reservations associated 
+      # with those rooms as values (in an array).
       
-      reservations_all_rooms = []
+
+      room_reservations = Hash.new { |hash,key| hash[key] = [] }
+      
       @all_reservations.each do |reservation|
-        reservations_all_rooms << {reservation.room_number => reservation.date_range}
-      end
+        room_reservations[reservation.room_number] << reservation
+      end 
       
-      return reservations_all_rooms
+      return room_reservations
     end
     
   end

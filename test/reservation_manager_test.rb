@@ -135,9 +135,13 @@ describe Hotel::ReservationManager do
       end
       
     end
+  end
+  
+  describe "Wave 2" do
     
-    describe "reservations_by_room" do
-      it "returns an array of hashes" do
+    
+    describe "reservations_by_rooms" do
+      it "returns a hash" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         date_range = Hotel::DateRange.new(start_date, end_date)
@@ -150,14 +154,12 @@ describe Hotel::ReservationManager do
         room_number = rand(1..20)
         reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
         
-        reservations_all_rooms = @reservation_manager.reservations_by_room
+        room_reservations = @reservation_manager.reservations_by_rooms
         
-        expect(reservations_all_rooms).must_be_kind_of Array
-        expect(reservations_all_rooms[0]).must_be_kind_of Hash
-        expect(reservations_all_rooms[1]).must_be_kind_of Hash
+        expect(room_reservations).must_be_kind_of Hash
       end
       
-      it "array is the expected length" do
+      it "hash is the expected length" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         date_range = Hotel::DateRange.new(start_date, end_date)
@@ -170,46 +172,44 @@ describe Hotel::ReservationManager do
         room_number = room_number
         reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
         
-        reservations_all_rooms = @reservation_manager.reservations_by_room
+        room_reservations = @reservation_manager.reservations_by_rooms
         
-        expect(reservations_all_rooms.length).must_equal 2
+        expect(room_reservations.length).must_equal 1
       end
       
-      it "hashes store room numbers" do
+      it "hash key is a room number" do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = room_number
         reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
         
-        # start_date = Date.parse("2019-12-21")
-        # end_date = Date.parse("2019-12-25")
-        # date_range = Hotel::DateRange.new(start_date, end_date)
-        # room_number = room_number
-        # reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        room_reservations = @reservation_manager.reservations_by_rooms
         
-        reservations_all_rooms = @reservation_manager.reservations_by_room
-        expect(reservations_all_rooms[0].has_key?(20)).must_equal true
+        expect(room_reservations.has_key?(20)).must_equal true
         
       end
       
-      # it "hashes contain expected information" do
-      #   start_date = Date.parse("2019-12-20")
-      #   end_date = Date.parse("2019-12-24")
-      #   date_range = Hotel::DateRange.new(start_date, end_date)
-      #   room_number = 10
-      #   reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
-      
-      #   # start_date = Date.parse("2019-12-21")
-      #   # end_date = Date.parse("2019-12-25")
-      #   # date_range = Hotel::DateRange.new(start_date, end_date)
-      #   # room_number = 2
-      #   # reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
-      
-      #   reservations_all_rooms = @reservation_manager.reservations_by_room
-      
-      #   expect(reservations_all_rooms[0].value?("10")).must_equal true
-      # end
+      it "hash values can store multiple date_ranges" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = room_number
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2020-01-15")
+        end_date = Date.parse("2020-01-16")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = room_number
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        room_reservations = @reservation_manager.reservations_by_rooms
+        
+        expect(room_reservations.values).must_be_kind_of Array
+
+        expect(room_reservations[20]).must_equal [reservation_1, reservation_2]
+        
+      end
       
     end
     
