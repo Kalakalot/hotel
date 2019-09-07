@@ -23,7 +23,8 @@ module Hotel
     end
   end
   
-  # def overlap?(other)
+  # def overlap?
+
   #   return false
   # end
   

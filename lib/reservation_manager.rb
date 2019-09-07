@@ -23,7 +23,7 @@ module Hotel
       
       # define the variables needed for a new reservation
       date_range = date_range
-      room_number = rand(1..20)
+      room_number = 20
       
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
@@ -38,7 +38,6 @@ module Hotel
     end
     
     def reservations(date)
-      # create an array to hold matching reservations
       reservations_for_date = []
       
       @all_reservations.each do |reservation|
@@ -49,6 +48,43 @@ module Hotel
       
       return reservations_for_date
       
+    end
+    
+    def rooms_available(date_range)
+      # UGH, LOOP WITHIN A LOOP ...
+      # create a new collection that sorts reservations by room number
+      # initialize an array to hold available rooms
+      # loop through the collection of reservations by room number
+      # for each room number, compare the existing reservations against the lookup date range
+      # for each existing reservation, check ...
+      #     if reservation.start_date is <something> than the lookup.start_date
+      #       &&
+      #     if reservation.end_date is <something> than the lookup.end_date
+      # if there are no overlapping dates, add the room number to the "available rooms" array
+      # return array of available rooms 
+      
+      
+      # 
+      # create a data structure that lists reservations by room number
+      
+      
+      # loop through each room number: 
+      # false if one or more reservations conflict
+      # true if no conflicts
+      # return all room numbers that evaluate to true
+    end
+    
+    def reservations_by_room
+      # helper method to transform @all_reservations into 
+      # an array of hashes, one hash per room number. Each hash
+      # includes room number and reservations as an array of values.
+      
+      reservations_all_rooms = []
+      @all_reservations.each do |reservation|
+        reservations_all_rooms << {reservation.room_number => reservation.date_range}
+      end
+      
+      return reservations_all_rooms
     end
     
   end

@@ -1,6 +1,7 @@
 # reservation_manager_test.rb
 
 require_relative 'test_helper'
+require 'pry'
 
 describe Hotel::ReservationManager do
   before do
@@ -74,7 +75,7 @@ describe Hotel::ReservationManager do
       
     end
     
-      
+    
     describe "reservations(date)" do
       it "returns an empty array if there are no reservations for the date provided" do
         # arrange
@@ -135,6 +136,83 @@ describe Hotel::ReservationManager do
       
     end
     
+    describe "reservations_by_room" do
+      it "returns an array of hashes" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2019-12-21")
+        end_date = Date.parse("2019-12-25")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = rand(1..20)
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        reservations_all_rooms = @reservation_manager.reservations_by_room
+        
+        expect(reservations_all_rooms).must_be_kind_of Array
+        expect(reservations_all_rooms[0]).must_be_kind_of Hash
+        expect(reservations_all_rooms[1]).must_be_kind_of Hash
+      end
+      
+      it "array is the expected length" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = room_number
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        start_date = Date.parse("2019-12-21")
+        end_date = Date.parse("2019-12-25")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = room_number
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        reservations_all_rooms = @reservation_manager.reservations_by_room
+        
+        expect(reservations_all_rooms.length).must_equal 2
+      end
+      
+      it "hashes store room numbers" do
+        start_date = Date.parse("2019-12-20")
+        end_date = Date.parse("2019-12-24")
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = room_number
+        reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        # start_date = Date.parse("2019-12-21")
+        # end_date = Date.parse("2019-12-25")
+        # date_range = Hotel::DateRange.new(start_date, end_date)
+        # room_number = room_number
+        # reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+        
+        reservations_all_rooms = @reservation_manager.reservations_by_room
+        expect(reservations_all_rooms[0].has_key?(20)).must_equal true
+        
+      end
+      
+      # it "hashes contain expected information" do
+      #   start_date = Date.parse("2019-12-20")
+      #   end_date = Date.parse("2019-12-24")
+      #   date_range = Hotel::DateRange.new(start_date, end_date)
+      #   room_number = 10
+      #   reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
+      
+      #   # start_date = Date.parse("2019-12-21")
+      #   # end_date = Date.parse("2019-12-25")
+      #   # date_range = Hotel::DateRange.new(start_date, end_date)
+      #   # room_number = 2
+      #   # reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+      
+      #   reservations_all_rooms = @reservation_manager.reservations_by_room
+      
+      #   expect(reservations_all_rooms[0].value?("10")).must_equal true
+      # end
+      
+    end
     
   end
+  
 end
