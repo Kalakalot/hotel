@@ -38,10 +38,10 @@ module Hotel
       elsif test_range.start_date > self.start_date && test_range.end_date < self.end_date 
         return true
         # returns true for a range that overlaps in front
-      elsif test_range.start_date < self.start_date && test_range.end_date != self.start_date
+      elsif test_range.start_date < self.start_date && test_range.end_date != self.start_date && test_range.end_date > self.start_date
         return true
         # returns true for a range that overlaps in the back
-      elsif test_range.end_date > self.end_date && test_range.start_date != self.end_date
+      elsif test_range.end_date > self.end_date && test_range.start_date != self.end_date && test_range.start_date < self.end_date
         return true
         # returns false for a range starting on the end date
       elsif test_range.start_date == self.end_date
@@ -49,7 +49,11 @@ module Hotel
         # returns false for a range ending on the start date
       elsif test_range.end_date == self.start_date
         return false
-      end
+      elsif test_range.end_date < self.start_date
+        return false
+      elsif test_range.start_date > self.end_date
+        return false
+      end 
       
       # def include?(date)
       #   return false
