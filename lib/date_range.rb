@@ -49,15 +49,23 @@ module Hotel
         # returns false for a range ending on the start date
       elsif test_range.end_date == self.start_date
         return false
+        # returns false for a date completely before
       elsif test_range.end_date < self.start_date
         return false
+        # returns false for a date completely after
       elsif test_range.start_date > self.end_date
         return false
       end 
       
-      # def include?(date)
-      #   return false
-      # end
+    end
+    
+    def include?(date)
+      # takes in a date and returns true if the date is part of the range, otherwise returns false
+      if date < self.start_date || date >= self.end_date 
+        return false
+      elsif date > self.start_date && date < self.end_date
+        return true
+      end
       
       # def nights 
       #   return 3
