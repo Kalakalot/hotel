@@ -154,11 +154,16 @@ describe Hotel::DateRange do
     
   end
   
-  
-  
-  # xdescribe "nights" do
-  #   it "returns the correct number of nights" do
-  #   end
-  # end
-  
+  describe "nights" do
+    before do
+      start_date = Date.new(2017, 01, 01)
+      end_date = start_date + 5
+      @range = Hotel::DateRange.new(start_date, end_date)
+    end
+
+    it "returns the correct number of nights" do
+      expect(@range.nights).must_equal 5
+    end
+  end
+
 end

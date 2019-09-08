@@ -66,12 +66,11 @@ module Hotel
       elsif date > self.start_date && date < self.end_date
         return true
       end
-      
-      # def nights 
-      #   return 3
-      # end
-      
-      #   end
     end
+    
+    def nights 
+      return self.end_date - self.start_date
+    end
+    
   end
 end
