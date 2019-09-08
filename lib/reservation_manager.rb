@@ -65,6 +65,9 @@ module Hotel
       # false if one or more reservations conflict
       # true if no conflicts
       # return all room numbers that evaluate to true
+
+# what if there are no reservations for the room?
+
       return available_rooms
       
     end

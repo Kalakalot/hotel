@@ -236,6 +236,10 @@ describe Hotel::ReservationManager do
         expect(available_rooms).must_be_kind_of Array
 
       end
+
+      it "rooms with overlapping reservations are not included" do
+
+      end
    
     end
     
