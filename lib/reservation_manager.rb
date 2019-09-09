@@ -21,19 +21,18 @@ module Hotel
     
     def reserve_room(date_range)
       
-      # define the variables needed for a new reservation
       date_range = date_range
       
-      # assign room_number from list of available rooms and remove asssigned room from the list
+      # assign room_number from list of available rooms and remove assigned room from the list
       room_number = (rooms_available(date_range)).shift
 
+      # raise error if no rooms are available
       if (rooms_available(date_range)).length  == 0
         raise ArgumentError.new(
           "Ack! All rooms are booked for the requested dates"
         )
       end
 
-      
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
         date_range,
@@ -47,6 +46,7 @@ module Hotel
     end
     
     def reservations(date)
+      # return a list of reservations for a given date
       reservations_for_date = []
       
       @all_reservations.each do |reservation|

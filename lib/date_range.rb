@@ -1,7 +1,5 @@
 # lib/date_range.rb
 
-require 'pry'
-
 module Hotel
   class DateRange
     

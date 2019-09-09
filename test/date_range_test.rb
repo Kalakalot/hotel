@@ -1,7 +1,6 @@
 # date_range_test.rb
 
 require_relative "test_helper"
-require 'pry'
 
 describe Hotel::DateRange do
   describe "Constructor" do
