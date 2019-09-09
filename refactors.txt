@@ -6,6 +6,5 @@ DateRange.overlap? has a mighty long and ugly series of conditionals. How could 
 The ReservationManager available_rooms method is a  loop-within-a-loop (yikes). How could this algorithm be more efficient? 
 My tests don't all take advantage of before / do setups for test data; would be more succinct if they did. 
 Should Reservation.cost and DateRange.nights send messages to each other? Code would be DRYer if they did. 
-The "raises an exception if all rooms are booked for requested range" test is almost 100 lines long. Come now. 
 
 
