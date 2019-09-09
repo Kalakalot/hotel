@@ -4,4 +4,7 @@ ReservationManager does an awful lot. What methods or messages could be moved to
 How interdependent are Reservation and ReservationManager and DateRange and ReservationManager? (I suspect at least moderately interdependent.) How could they be made less dependent?
 DateRange.overlap? has a mighty long and ugly series of conditionals. How could that logic be more concise?
 The ReservationManager available_rooms method is a  loop-within-a-loop (yikes). How could this algorithm be more efficient? 
-My tests don't all take advantage of before / do setups for test data. 
+My tests don't all take advantage of before / do setups for test data; would be more succinct if they did. 
+Should Reservation.cost and DateRange.nights send messages to each other? Code would be DRYer if they did. 
+
+

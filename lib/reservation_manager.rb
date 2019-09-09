@@ -19,11 +19,15 @@ module Hotel
       return room_list
     end
     
-    def reserve_room(date_range, room_number)
+    def reserve_room(date_range)
       
       # define the variables needed for a new reservation
       date_range = date_range
-      room_number = room_number
+      
+      # assign room_number from list of available rooms and remove asssigned room from the list
+      room_number = (rooms_available(date_range)).shift
+
+      # room_number = date_range.rooms_available.shift
       
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
@@ -51,9 +55,8 @@ module Hotel
     end
     
     def reservations_by_rooms
-      # helper method to transform @all_reservations into 
-      # a hash with room numbers as keys and reservations associated 
-      # with those rooms as values (in an array).
+      # helper method to transform @all_reservations into a hash with room # numbers as keys and reservations associated with those rooms as 
+      # values (in an array).
       
       room_reservations = Hash.new { |hash,key| hash[key] = [] }
       
