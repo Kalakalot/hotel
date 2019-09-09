@@ -30,10 +30,10 @@ describe Hotel::ReservationManager do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         range = Hotel::DateRange.new(start_date, end_date)
-
+        
         # room_number = rand(1..20)
         
-  
+        
         new_reservation = @reservation_manager.reserve_room(range)
         # assert
         expect(new_reservation).must_be_kind_of Hotel::Reservation
@@ -197,7 +197,7 @@ describe Hotel::ReservationManager do
         start_date = Date.parse("2020-01-15")
         end_date = Date.parse("2020-01-16")
         date_range = Hotel::DateRange.new(start_date, end_date)
-       reservation_2 = @reservation_manager.reserve_room(date_range)
+        reservation_2 = @reservation_manager.reserve_room(date_range)
         
         room_reservations = @reservation_manager.reservations_by_rooms
         
@@ -252,7 +252,7 @@ describe Hotel::ReservationManager do
         
         expect(available_rooms).must_equal [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
       end
-
+      
       it "rooms with non-overlapping reservations are included" do
         start_date = Date.parse("2020-01-22")
         end_date = start_date + 3
@@ -267,22 +267,22 @@ describe Hotel::ReservationManager do
     
     describe "reserve_room" do
       before do 
-      start_date = Date.parse("2019-12-20")
-      end_date = start_date + 10
-      date_range = Hotel::DateRange.new(start_date, end_date)
-      reservation_1 = @reservation_manager.reserve_room(date_range)
-      
-      start_date = Date.parse("2019-12-21")
-      end_date = start_date + 4
-      date_range = Hotel::DateRange.new(start_date, end_date)
-      reservation_2 = @reservation_manager.reserve_room(date_range)
-      
-      start_date = Date.parse("2020-01-01")
-      end_date = start_date + 1
-      date_range = Hotel::DateRange.new(start_date, end_date)
-      reservation_2 = @reservation_manager.reserve_room(date_range)
+        start_date = Date.parse("2019-12-20")
+        end_date = start_date + 10
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_1 = @reservation_manager.reserve_room(date_range)
+        
+        start_date = Date.parse("2019-12-21")
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_2 = @reservation_manager.reserve_room(date_range)
+        
+        start_date = Date.parse("2020-01-01")
+        end_date = start_date + 1
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_2 = @reservation_manager.reserve_room(date_range)
       end
-
+      
       it "reservation will not overlap another reservation for the room" do
         
         start_date = Date.parse("2019-12-22")
@@ -292,11 +292,103 @@ describe Hotel::ReservationManager do
         requested_reservation = @reservation_manager.reserve_room(test_date_range)
         
         expect(requested_reservation.room_number).must_equal 3
-
+        
       end
+      
+      it "raises an exception if all rooms are booked for requested range" do 
+        
+        start_date = Date.parse("2019-12-21")
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_3 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_4 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_5 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_6 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_7 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_8 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_9 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_10 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_11 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_12 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_13 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_14 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_15 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_16 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_17 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_18 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_19 = @reservation_manager.reserve_room(date_range)
+        
+        end_date = start_date + 4
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        reservation_20 = @reservation_manager.reserve_room(date_range)
+        
+        start_date = Date.parse("2019-12-22")
+        end_date = Date.parse("2019-12-24")
+        test_date_range = Hotel::DateRange.new(start_date, end_date)
+        
+        # requested_reservation = @reservation_manager.reserve_room(test_date_range)
+        
+        expect{ @reservation_manager.reserve_room(test_date_range) }.must_raise ArgumentError
+
+        # it "raises an error if the start date is after the end date" do
+        #   start_date = Date.new(2021, 01, 01)
+        #   end_date = start_date - 3
+          
+        #   expect{ Hotel::DateRange.new(start_date, end_date) }.must_raise Ar
+        
+      end
+      
     end
-    
   end
+  
 end
 
 

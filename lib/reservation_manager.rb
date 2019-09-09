@@ -27,7 +27,12 @@ module Hotel
       # assign room_number from list of available rooms and remove asssigned room from the list
       room_number = (rooms_available(date_range)).shift
 
-      # room_number = date_range.rooms_available.shift
+      if (rooms_available(date_range)).length  == 0
+        raise ArgumentError.new(
+          "Ack! All rooms are booked for the requested dates"
+        )
+      end
+
       
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
@@ -70,7 +75,7 @@ module Hotel
     def rooms_available(requested_range)
       
       available_rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-      
+
       room_reservations = self.reservations_by_rooms
       
       # look at each element in the hash
