@@ -181,7 +181,7 @@ describe Hotel::ReservationManager do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         date_range = Hotel::DateRange.new(start_date, end_date)
-        room_number = room_number
+        room_number = 20
         reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
         
         room_reservations = @reservation_manager.reservations_by_rooms
@@ -194,13 +194,13 @@ describe Hotel::ReservationManager do
         start_date = Date.parse("2019-12-20")
         end_date = Date.parse("2019-12-24")
         date_range = Hotel::DateRange.new(start_date, end_date)
-        room_number = room_number
+        room_number = 20
         reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
         
         start_date = Date.parse("2020-01-15")
         end_date = Date.parse("2020-01-16")
         date_range = Hotel::DateRange.new(start_date, end_date)
-        room_number = room_number
+        room_number = 20
         reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
         
         room_reservations = @reservation_manager.reservations_by_rooms
@@ -214,18 +214,28 @@ describe Hotel::ReservationManager do
     
     describe "rooms_available" do
       
-      it "returns an array" do
+      before do 
         start_date = Date.parse("2019-12-20")
-        end_date = Date.parse("2019-12-24")
+        end_date = start_date + 10
         date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = 5
         reservation_1 = @reservation_manager.reserve_room(date_range, room_number)
         
         start_date = Date.parse("2019-12-21")
-        end_date = Date.parse("2019-12-25")
+        end_date = start_date + 4
         date_range = Hotel::DateRange.new(start_date, end_date)
         room_number = 6
         reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+
+        start_date = Date.parse("2020-01-01")
+        end_date = start_date + 1
+        date_range = Hotel::DateRange.new(start_date, end_date)
+        room_number = 6
+        reservation_2 = @reservation_manager.reserve_room(date_range, room_number)
+
+      end
+      
+      it "returns an array" do
 
         start_date = Date.parse("2019-12-22")
         end_date = Date.parse("2019-12-24")
@@ -238,7 +248,13 @@ describe Hotel::ReservationManager do
       end
 
       it "rooms with overlapping reservations are not included" do
-
+        start_date = Date.parse("2019-12-22")
+        end_date = Date.parse("2019-12-24")
+        test_date_range = Hotel::DateRange.new(start_date, end_date)
+        
+        available_rooms = @reservation_manager.rooms_available(test_date_range)
+        
+        expect(available_rooms).must_equal [1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
       end
    
     end

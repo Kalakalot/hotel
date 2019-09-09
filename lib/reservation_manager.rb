@@ -23,7 +23,7 @@ module Hotel
       
       # define the variables needed for a new reservation
       date_range = date_range
-      room_number = 20
+      room_number = room_number
       
       # instantitate the new reservation
       reservation = Hotel::Reservation.new(
@@ -50,28 +50,6 @@ module Hotel
       
     end
     
-    def rooms_available(date_range)
-      
-      available_rooms = []
-      
-      # create a data structure that lists reservations by room number
-      
-      
-      # loop through each room number: 
-      # for each existing reservation, check ...
-      #     if reservation.start_date is <something> than the lookup.start_date
-      #       &&
-      #     if reservation.end_date is <something> than the lookup.end_date
-      # false if one or more reservations conflict
-      # true if no conflicts
-      # return all room numbers that evaluate to true
-
-# what if there are no reservations for the room?
-
-      return available_rooms
-      
-    end
-    
     def reservations_by_rooms
       # helper method to transform @all_reservations into 
       # a hash with room numbers as keys and reservations associated 
@@ -84,6 +62,29 @@ module Hotel
       end 
       
       return room_reservations
+    end
+    
+    def rooms_available(requested_range)
+      
+      available_rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+      
+      room_reservations = self.reservations_by_rooms
+      
+      # look at each element in the hash
+      room_reservations.each do |room_number, reservations|
+        # loop through the array of reservations associated with the room number
+        reservations.each do |reservation|
+          # if a reservation range overlaps
+          if reservation.date_range.overlap?(requested_range)
+            # remove the room from the list of available_rooms
+            available_rooms.delete(reservation.room_number)
+          end
+        end
+        
+      end
+      
+      return available_rooms
+      
     end
     
   end

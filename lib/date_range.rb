@@ -69,6 +69,7 @@ module Hotel
     end
     
     def nights 
+      # returns number of nights for an instance of DateRange
       return self.end_date - self.start_date
     end
     
